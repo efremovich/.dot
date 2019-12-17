@@ -142,6 +142,7 @@ endfunction
 autocmd BufEnter * call SyncTree()
 
 "COC VIM
+
 " if hidden is not set, TextEdit might fail.
 set hidden
 
