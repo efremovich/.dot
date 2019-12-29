@@ -272,6 +272,11 @@ nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
 " Resume latest coc list
 nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
 
+let g:LanguageClient_serverCommands = {
+    \ 'vue': ['vls']
+    \ }
+
+
 let g:go_term_mode = "split"
 let g:go_term_height = 30
 let g:go_term_width = 30
