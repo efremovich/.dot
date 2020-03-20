@@ -2,6 +2,10 @@
 " - For Neovim: stdpath('data') . '/plugged'
 " - Avoid using standard Vim directory names like 'plugin'
 call plug#begin('~/.vim/plugged')
+" format code
+"Plug 'maksimr/vim-jsbeautify'
+Plug 'beanworks/vim-phpfmt'
+
 Plug 'terryma/vim-multiple-cursors'
 " Using a tagged release; wildcard allowed (requires git 1.9.2 or above)
 Plug 'fatih/vim-go', { 'tag': '*' }
@@ -9,13 +13,13 @@ Plug 'majutsushi/tagbar'
 
 Plug 'AndrewRadev/splitjoin.vim'
 Plug 'SirVer/ultisnips'
-Plug 'honza/vim-snippets'
+"Plug 'honza/vim-snippets'
 " Plugin options
 Plug 'nsf/gocode',  {'rtp': 'vim', 'do': '~/.vim/plugged/gocode/vim/symlink.sh' }
 
 " Plugin outside ~/.vim/plugged with post-update hook
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-Plug 'mileszs/ack.vim'
+"Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+"Plug 'mileszs/ack.vim'
 
 " VUE JS
 Plug 'leafOfTree/vim-vue-plugin'
@@ -25,23 +29,35 @@ Plug 'morhetz/gruvbox'
 "Plug 'jacoborus/tender.vim'
 
 "TS Syntax
-Plug 'HerringtonDarkholme/yats.vim' " TS Syntax
+"Plug 'HerringtonDarkholme/yats.vim' " TS Syntax
 
 Plug 'rking/ag.vim'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
+
 Plug 'scrooloose/nerdtree'
 Plug 'Xuyuanp/nerdtree-git-plugin'
+Plug 'unkiwii/vim-nerdtree-sync'
 Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 Plug 'ryanoasis/vim-devicons'
+
+Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
+
 Plug 'ctrlpvim/ctrlp.vim' " fuzzy find files
 Plug 'scrooloose/nerdcommenter'
 Plug 'christoomey/vim-tmux-navigator'
 
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
+"Plug 'itchyny/lightline.vim'
+"Plug 'bling/vim-bufferline'
 Plug 'edkolev/tmuxline.vim'
 
+if has('nvim') || has('patch-8.0.902')
+  Plug 'mhinz/vim-signify'
+else
+  Plug 'mhinz/vim-signify', { 'branch': 'legacy' }
+endif
 " Initialize plugin system
 call plug#end()
 
@@ -81,11 +97,42 @@ endif
 let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 
 " AirLine settings
-set laststatus=2
+set laststatus=2 
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_theme='gruvbox'
 let g:airline_powerline_fonts = 1
+"let g:airline#extensions#branch#enabled = 1
+"let g:airline#extensions#hunks#enabled=1  
+"set t_Co=256
 
+" lightline
+let g:lightline = {
+\   'colorscheme': 'gruvbox',
+\   'active': {
+\     'left':[ [ 'mode', 'paste' ],
+\              [ 'gitbranch', 'readonly', 'filename', 'modified' ]
+\     ]
+\   },
+  \   'component': {
+  \     'lineinfo': ' %3l:%-2v',
+  \   },
+\   'component_function': {
+\     'gitbranch': 'fugitive#head',
+\   }
+  \ }
+let g:lightline.separator = {
+    \   'left': '', 'right': ''
+  \}
+let g:lightline.subseparator = {
+    \   'left': '', 'right': '' 
+  \}
+
+let g:lightline.tabline = {
+  \   'left': [ ['tabs'] ],
+  \   'right': [ ['close'] ]
+  \ }
+set showtabline=2  " Show tabline
+set guioptions-=e  " Don't use GUI tabline  
 
 " NERDTree & NERDTree tabs plugins
 let g:nerdtree_tabs_smart_startup_focus = 2
@@ -99,7 +146,8 @@ let g:UltiSnipsJumpBackwardTrigger="<c-p>"
 
 
 inoremap jk <ESC>
-nmap <F3> :NERDTreeToggle<CR>
+nmap <F3> :NERDTreeToggleVCS<CR>
+let g:nerdtree_sync_cursorline = 1
 nmap <F2> :TagbarToggle<CR>
 vmap ++ <plug>NERDCommenterToggle
 nmap ++ <plug>NERDCommenterToggle
@@ -112,34 +160,35 @@ noremap <silent> <expr> j (v:count == 0 ? 'gj' : 'j')
 noremap <silent> <expr> k (v:count == 0 ? 'gk' : 'k')
 
 " sync open file with NERDTree
-" " Check if NERDTree is open or active
-function! IsNERDTreeOpen()        
-  return exists("t:NERDTreeBufName") && (bufwinnr(t:NERDTreeBufName) != -1)
-endfunction
+  "Check if NERDTree is open or active
+"function! IsNERDTreeOpen()        
+  "return exists("t:NERDTreeBufName") && (bufwinnr(t:NERDTreeBufName) != -1)
+"endfunction
 
-" Call NERDTreeFind iff NERDTree is active, current window contains a modifiable
-" file, and we're not in vimdiff
-function! SyncTree()
-  if &modifiable && IsNERDTreeOpen() && strlen(expand('%')) > 0 && !&diff
-    NERDTreeFind
-    wincmd p
-  endif
-endfunction
+ "Call NERDTreeFind iff NERDTree is active, current window contains a modifiable
+ "file, and we're not in vimdiff
+"function! SyncTree()
+  "if &modifiable && IsNERDTreeOpen() && strlen(expand('%')) > 0 && !&diff
+    "NERDTreeFind
+    "wincmd p
+  "endif
+"endfunction
 
-" Exit if quickfix is last window
-au BufEnter * call MyLastWindow()
-function! MyLastWindow()
-    " if the window is quickfix go on
-    if &buftype=="quickfix"
-        " if this window is last on screen quit without warning
-        if winbufnr(2) == -1
-            quit!
-        endif
-    endif
-endfunction
+ "Highlight currently open buffer in NERDTree
+"autocmd BufEnter * call SyncTree()
 
-" Highlight currently open buffer in NERDTree
-autocmd BufEnter * call SyncTree()
+ "Exit if quickfix is last window
+"au BufEnter * call MyLastWindow()
+"function! MyLastWindow()
+   "if the window is quickfix go on
+    "if &buftype=="quickfix"
+         "if this window is last on screen quit without warning
+        "if winbufnr(2) == -1
+            "quit!
+        "endif
+    "endif
+"endfunction
+
 
 "COC VIM
 
@@ -151,7 +200,7 @@ set nobackup
 set nowritebackup
 
 " Better display for messages
-set cmdheight=2
+set cmdheight=1
 
 " You will have bad experience for diagnostic messages when it's default 4000.
 set updatetime=300
@@ -291,14 +340,14 @@ let g:go_auto_type_info = 0
 let g:go_highlight_trailing_whitespace_error = 0
 
 " Go-Specific
-au FileType go nmap gi <Plug>(go-install)
+au FileType go nmap <leader>i <Plug>(go-install)
 au FileType go nmap <leader>b <Plug>(go-build)
 au FileType go nmap <leader>c <Plug>(go-coverage)
 au FileType go nmap <leader>e <Plug>(go-rename)
 au FileType go nmap <leader>i <Plug>(go-info)
 au FileType go nmap <leader>l :GoLint<CR>
 au FileType go nmap <leader>q :GoImport<space>
-au FileType go nmap <Leader>f <Plug>:GoImpl<space>
+au FileType go nmap <leader>f <Plug>:GoImpl<space>
 au FileType go nmap <leader>ff <Plug>(go-implements)
 au FileType go vmap <leader>r :GoAddTags<space>
 au FileType go vmap <leader>p :GoPlay<CR>
@@ -312,12 +361,15 @@ au FileType go nmap <leader>dt <Plug>(go-def-tab)
 au FileType go nmap <leader>gb <Plug>(go-doc-browser)
 au FileType go nmap <leader>gs <Plug>(go-doc-split)
 au FileType go nmap <leader>gv <Plug>(go-doc-vertical)
+au FileType go nmap <leader><leader>g :GoDecls<CR>
+
+set autowrite
 
 " Developper
 nmap , :lnext<CR>
 nmap ? :lprevious<CR>
-nmap ]h <Plug>GitGutterNextHunk
-nmap [h <Plug>GitGutterPrevHunk
+nmap ]h <Plug>(GitGutterNextHunk)
+nmap [h <Plug>(GitGutterPrevHunk)
 
 " Search
 nmap <leader><leader>s :%s/<C-r><C-w>/
@@ -325,3 +377,30 @@ nmap <leader><leader>a :Ag<space>
 nmap <leader>aa :Ag <C-r><C-w><CR>
 
 
+"autocmd FileType javascript noremap <buffer>  <c-f> :call JsBeautify()<cr>
+"" for json
+"autocmd FileType json noremap <buffer> <c-f> :call JsonBeautify()<cr>
+"" for jsx
+"autocmd FileType jsx noremap <buffer> <c-f> :call JsxBeautify()<cr>
+"" for html
+"autocmd FileType html noremap <buffer> <c-f> :call HtmlBeautify()<cr>
+"" for css or scss
+"autocmd FileType css noremap <buffer> <c-f> :call CSSBeautify()<cr>
+
+
+" navigate chunks of current buffer
+nmap [g <Plug>(coc-git-prevchunk)
+nmap ]g <Plug>(coc-git-nextchunk)
+" show chunk diff at current position
+nmap gs <Plug>(coc-git-chunkinfo)
+" show commit contains current position
+nmap gc <Plug>(coc-git-commit)
+" create text object for git chunks
+omap ig <Plug>(coc-git-chunk-inner)
+xmap ig <Plug>(coc-git-chunk-inner)
+omap ag <Plug>(coc-git-chunk-outer)
+xmap ag <Plug>(coc-git-chunk-outer)
+
+" Tab navigation like Firefox.
+nnoremap <S-C-Tab> :bprevious<CR>
+nnoremap <S-Tab>   :bnext<CR>
