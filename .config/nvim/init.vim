@@ -6,9 +6,10 @@ call plug#begin('~/.vim/plugged')
 "Plug 'maksimr/vim-jsbeautify'
 Plug 'beanworks/vim-phpfmt'
 
-Plug 'terryma/vim-multiple-cursors'
+"Plug 'terryma/vim-multiple-cursors'
 " Using a tagged release; wildcard allowed (requires git 1.9.2 or above)
 Plug 'fatih/vim-go', { 'tag': '*' }
+
 Plug 'majutsushi/tagbar'
 
 Plug 'AndrewRadev/splitjoin.vim'
@@ -41,7 +42,7 @@ Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 Plug 'ryanoasis/vim-devicons'
 
 Plug 'tpope/vim-fugitive'
-Plug 'airblade/vim-gitgutter'
+"Plug 'airblade/vim-gitgutter'
 
 Plug 'ctrlpvim/ctrlp.vim' " fuzzy find files
 Plug 'scrooloose/nerdcommenter'
@@ -49,7 +50,7 @@ Plug 'christoomey/vim-tmux-navigator'
 
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-"Plug 'itchyny/lightline.vim'
+"PlugT 'itchyny/lightline.vim'
 "Plug 'bling/vim-bufferline'
 Plug 'edkolev/tmuxline.vim'
 
@@ -78,8 +79,8 @@ set mouse=a
 set clipboard=unnamedplus
 
 " Closetag script
-autocmd Filetype html let g:closetag_html_style=1
-autocmd Filetype html,xml,xsl source ~/.vim/scripts/closetag.vim
+autocmd FileType html let g:closetag_html_style=1
+autocmd FileType html,xml,xsl source ~/.vim/scripts/closetag.vim
 autocmd FileType ruby,yaml setl nowrap sw=2 sts=2 et
 autocmd BufNewFile,BufReadPost *.md set filetype=markdown
 autocmd FileType qf wincmd J
@@ -103,34 +104,8 @@ let g:airline_theme='gruvbox'
 let g:airline_powerline_fonts = 1
 "let g:airline#extensions#branch#enabled = 1
 "let g:airline#extensions#hunks#enabled=1  
-"set t_Co=256
+set t_Co=256
 
-" lightline
-let g:lightline = {
-\   'colorscheme': 'gruvbox',
-\   'active': {
-\     'left':[ [ 'mode', 'paste' ],
-\              [ 'gitbranch', 'readonly', 'filename', 'modified' ]
-\     ]
-\   },
-  \   'component': {
-  \     'lineinfo': ' %3l:%-2v',
-  \   },
-\   'component_function': {
-\     'gitbranch': 'fugitive#head',
-\   }
-  \ }
-let g:lightline.separator = {
-    \   'left': '', 'right': ''
-  \}
-let g:lightline.subseparator = {
-    \   'left': '', 'right': '' 
-  \}
-
-let g:lightline.tabline = {
-  \   'left': [ ['tabs'] ],
-  \   'right': [ ['close'] ]
-  \ }
 set showtabline=2  " Show tabline
 set guioptions-=e  " Don't use GUI tabline  
 
@@ -200,7 +175,7 @@ set nobackup
 set nowritebackup
 
 " Better display for messages
-set cmdheight=1
+set cmdheight=2
 
 " You will have bad experience for diagnostic messages when it's default 4000.
 set updatetime=300
@@ -336,8 +311,18 @@ let g:go_highlight_methods = 1
 let g:go_highlight_structs = 1
 let g:go_highlight_operators = 1
 let g:go_highlight_build_constraints = 1
-let g:go_auto_type_info = 0
-let g:go_highlight_trailing_whitespace_error = 0
+let g:go_highlight_types = 1
+let g:go_highlight_fields = 1
+let g:go_highlight_trailing_whitespace_error = 1
+let g:go_highlight_function_calls = 1
+let g:go_highlight_operators = 1
+let g:go_highlight_extra_types = 1
+let g:go_highlight_variable_declarations = 1
+let g:go_highlight_variable_assignments = 1
+
+let g:go_auto_type_info = 1
+let g:go_fmt_command = "goimports"
+
 
 " Go-Specific
 au FileType go nmap <leader>i <Plug>(go-install)
@@ -404,3 +389,6 @@ xmap ag <Plug>(coc-git-chunk-outer)
 " Tab navigation like Firefox.
 nnoremap <S-C-Tab> :bprevious<CR>
 nnoremap <S-Tab>   :bnext<CR>
+
+nmap <silent> <C-d> <Plug>(coc-cursors-word)*
+xmap <silent> <C-d> y/\V<C-r>=escape(@",'/\')<CR><CR>gN<Plug>(coc-cursors-range)gn
