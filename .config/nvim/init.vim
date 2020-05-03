@@ -20,10 +20,10 @@ Plug 'nsf/gocode',  {'rtp': 'vim', 'do': '~/.vim/plugged/gocode/vim/symlink.sh' 
 
 " Plugin outside ~/.vim/plugged with post-update hook
 "Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-"Plug 'mileszs/ack.vim'
+Plug 'mileszs/ack.vim'
 
 " VUE JS
-Plug 'leafOfTree/vim-vue-plugin'
+"Plug 'leafOfTree/vim-vue-plugin'
 
 " Theme
 Plug 'morhetz/gruvbox'
@@ -32,7 +32,7 @@ Plug 'morhetz/gruvbox'
 "TS Syntax
 "Plug 'HerringtonDarkholme/yats.vim' " TS Syntax
 
-Plug 'rking/ag.vim'
+"Plug 'rking/ag.vim'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 Plug 'scrooloose/nerdtree'
@@ -358,8 +358,8 @@ nmap [h <Plug>(GitGutterPrevHunk)
 
 " Search
 nmap <leader><leader>s :%s/<C-r><C-w>/
-nmap <leader><leader>a :Ag<space>
-nmap <leader>aa :Ag <C-r><C-w><CR>
+nmap <leader><leader>a :Ask<space>
+nmap <leader>aa :Ack <C-r><C-w><CR>
 
 
 "autocmd FileType javascript noremap <buffer>  <c-f> :call JsBeautify()<cr>
@@ -392,3 +392,6 @@ nnoremap <S-Tab>   :bnext<CR>
 
 nmap <silent> <C-d> <Plug>(coc-cursors-word)*
 xmap <silent> <C-d> y/\V<C-r>=escape(@",'/\')<CR><CR>gN<Plug>(coc-cursors-range)gn
+
+""vetur
+
