@@ -15,6 +15,7 @@ Plug 'majutsushi/tagbar'
 Plug 'AndrewRadev/splitjoin.vim'
 Plug 'SirVer/ultisnips'
 "Plug 'honza/vim-snippets'
+
 " Plugin options
 Plug 'nsf/gocode',  {'rtp': 'vim', 'do': '~/.vim/plugged/gocode/vim/symlink.sh' }
 
@@ -23,11 +24,17 @@ Plug 'nsf/gocode',  {'rtp': 'vim', 'do': '~/.vim/plugged/gocode/vim/symlink.sh' 
 Plug 'mileszs/ack.vim'
 
 " VUE JS
-"Plug 'leafOfTree/vim-vue-plugin'
-
+Plug 'leafOfTree/vim-vue-plugin'
+"Plug 'leaffTree/vim-vue-plugin'
+"Plug 'posva/vim-vue'
+"Plug 'storyn26383/vim-vue'
+Plug 'dense-analysis/ale'
+"Plug 'neovim/nvim-lsp'
+'
 " Theme
 Plug 'morhetz/gruvbox'
 "Plug 'jacoborus/tender.vim'
+"Plug 'tomasr/molokai'
 
 "TS Syntax
 "Plug 'HerringtonDarkholme/yats.vim' " TS Syntax
@@ -89,6 +96,7 @@ au VimLeave * !echo -ne "\033[0m"
 
 " Theme
 syntax enable
+"colorscheme molokai
 colorscheme gruvbox
 " If you have vim >=8.0 or Neovim >= 0.1.5
 if (has("termguicolors"))
@@ -102,6 +110,7 @@ set laststatus=2
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_theme='gruvbox'
 let g:airline_powerline_fonts = 1
+let g:airline#extensions#ale#enabled = 1
 "let g:airline#extensions#branch#enabled = 1
 "let g:airline#extensions#hunks#enabled=1  
 set t_Co=256
@@ -297,7 +306,7 @@ nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
 nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
 
 let g:LanguageClient_serverCommands = {
-    \ 'vue': ['vls']
+    \ 'vue': ['vls'],
     \ }
 
 
@@ -358,7 +367,7 @@ nmap [h <Plug>(GitGutterPrevHunk)
 
 " Search
 nmap <leader><leader>s :%s/<C-r><C-w>/
-nmap <leader><leader>a :Ask<space>
+nmap <leader><leader>a :Ack<space>
 nmap <leader>aa :Ack <C-r><C-w><CR>
 
 
@@ -393,5 +402,16 @@ nnoremap <S-Tab>   :bnext<CR>
 nmap <silent> <C-d> <Plug>(coc-cursors-word)*
 xmap <silent> <C-d> y/\V<C-r>=escape(@",'/\')<CR><CR>gN<Plug>(coc-cursors-range)gn
 
-""vetur
-
+let g:ale_set_highlights = 1
+"let g:ale_set_signs = 1
+let g:ale_echo_cursor = 1
+let g:ale_virtualtext_cursor = 1
+let g:ale_set_balloons = 1
+"let g:airline#extensions#ale#enabled=1
+"let g:ale_set_quickfix = 1
+"let g:vim_vue_plugin_load_full_syntax = 1
+"let g:ale_open_list = 1
+"" Set this if you want to.
+"" This can be useful if you are combining ALE with
+"" some other plugin which sets quickfix errors, etc.
+"let g:ale_keep_list_window_open = 1
