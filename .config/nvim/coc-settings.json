@@ -1,7 +1,13 @@
 {
- "suggest.maxPreviewWidth": 120,
+"suggest.echodocSupport": true,
+  "suggest.maxCompleteItemCount": 20,
+  "eslint.filetypes": ["javascript", "typescript", "typescriptreact", "javascriptreact", "typescript.tsx"],
+  "diagnostic.errorSign": "•",
+  "diagnostic.warningSign": "•",
+  "diagnostic.infoSign": "•",
+  "suggest.maxPreviewWidth": 120,
  "suggest.noselect": false,
-
+"vetur.format.defaultFormatter.html": "prettier",
  "coc.preferences.formatOnSaveFiletypes": [
     "javascript",
     "typescript",
@@ -13,6 +19,7 @@
   "languageserver": {
   "golang": {
       "command": "gopls",
+      "args": ["serve", "-debug", "0.0.0.0:8484", "-rpc.trace"],
       "rootPatterns": ["go.mod"],
       "disableWorkspaceFolders": true,
       "filetypes": ["go"]
