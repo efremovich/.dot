@@ -171,7 +171,7 @@ inoremap <silent><expr> <TAB>
       \ pumvisible() ? "\<C-n>" :
       \ <SID>check_back_space() ? "\<TAB>" :
       \ coc#refresh()
-
+inoremap <silent><expr> <c-space> coc#refresh()
 "Close preview window when completion is done.
 autocmd! CompleteDone * if pumvisible() == 0 | pclose | endif
 
@@ -309,7 +309,7 @@ au FileType go vmap <leader>r :GoAddTags<space>
 au FileType go vmap <leader>p :GoPlay<CR>
 au FileType go nmap <leader>r <Plug>(go-run)
 au FileType go nmap <leader>s <Plug>(go-install)
-au FileType go nmap <leader>t <Plug>(go-test)
+"au FileType go nmap <leader>t <Plug>(go-test)
 au FileType go nmap <leader>v <Plug>(go-vet)
 au FileType go nmap <leader>ds <Plug>(go-def-split)
 au FileType go nmap <leader>dv <Plug>(go-def-vertical)
@@ -477,8 +477,8 @@ call denite#custom#var('buffer', 'date_format', '')
 "   highlight_matched_char  - Matched characters highlight
 "   highlight_matched_range - matched range highlight
 let s:denite_options = {'default' : {
-"\ 'split': 'floating',
-\ 'start_filter': 1,
+\ 'split': 'floating_relative',
+"\ 'start_filter': 1,
 \ 'auto_resize': 1,
 \ 'source_names': 'short',
 \ 'prompt': 'λ ',
@@ -632,7 +632,7 @@ try
 catch
   colorscheme gruvbox
 endtry
-"hi! link javaScript             Gruvbox8Blue
+"hi! link javaScript             blue
 "hi! link jsExportDefault        Gruvbox8Blue
 "hi! link jsImport               GruvboxBlue
 "hi! link jsFrom                 GruvboxBlue
@@ -640,11 +640,11 @@ endtry
 "hi! link jsObjectProp           GruvboxBlue
 "hi! link jsExport               GruvboxRedBold
 "hi! link jsObjectFuncName       GruvboxBlueBold
-"hi! link jsFuncCall             GruvboxBlueBold
+"hi! link jsFuncCall             red
 "hi! link jsVariableDef          GruvboxFg1
 "hi! link jsDestructuringBlock   GruvboxFg1
 "hi! link jsObjectShorthandProp  GruvboxFg1
-"hi! link jsFuncArgs             GruvboxFg1
+"hi! link jsFuncArgs             green
 "hi! link htmlH2                 GruvboxFg1
 "hi! link jsBrackets             GruvboxFg4
 "hi! link jsObjectBraces         GruvboxFg4
@@ -658,3 +658,4 @@ endtry
 " Automaticaly close nvim if NERDTree is only thing left open
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 "find . -type f -iregex ".*\.js$" -not -path "./node_modules/*" -exec jsctags {} -f \; | sed '/^$/d' | LANG=C sort > tags
+"find . -type f -iregex ".*\.js$" -exec jsctags {} -f \; | sed '/^$/d' | LANG=C sort > tags
