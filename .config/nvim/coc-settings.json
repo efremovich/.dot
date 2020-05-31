@@ -1,14 +1,31 @@
 {
-"suggest.echodocSupport": true,
+  "suggest.echodocSupport": true,
   "suggest.maxCompleteItemCount": 20,
-  "eslint.filetypes": ["javascript", "typescript", "typescriptreact", "javascriptreact", "typescript.tsx"],
+  "eslint.filetypes": [
+    "javascript",
+    "typescript",
+    "typescriptreact",
+    "javascriptreact",
+    "typescript.tsx"
+  ],
+  "diagnostic.refreshAfterSave": true,
   "diagnostic.errorSign": "•",
   "diagnostic.warningSign": "•",
   "diagnostic.infoSign": "•",
   "suggest.maxPreviewWidth": 120,
- "suggest.noselect": false,
-"vetur.format.defaultFormatter.html": "prettier",
- "coc.preferences.formatOnSaveFiletypes": [
+  "suggest.noselect": false,
+  "vetur.format.defaultFormatter.html": "prettier",
+  "vetur.format.defaultFormatter.js": "prettier-eslint",
+  "vetur.format.defaultFormatterOptions": {
+    "js-beautify-html": { "wrap_attributes": "force-expand-multiline" },
+    "prettyhtml": {
+      "printWidth": 100,
+      "singleQuote": true,
+      "wrapAttributes": false,
+      "sortAttributes": false
+    }
+  },
+  "coc.preferences.formatOnSaveFiletypes": [
     "javascript",
     "typescript",
     "typescriptreact",
@@ -17,15 +34,13 @@
     "php"
   ],
   "languageserver": {
-  "golang": {
+    "golang": {
       "command": "gopls",
       "args": ["serve", "-debug", "0.0.0.0:8484", "-rpc.trace"],
       "rootPatterns": ["go.mod"],
       "disableWorkspaceFolders": true,
       "filetypes": ["go"]
     }
-  }
-
+  },
+  "coc.preferences.extensionUpdateCheck": "daily"
 }
-
-
