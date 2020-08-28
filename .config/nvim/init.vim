@@ -23,7 +23,7 @@ Plug 'morhetz/gruvbox'
 Plug 'lifepillar/vim-gruvbox8'
 
 " Automatic close parens
-Plug 'jiangmiao/auto-pairs'
+"Plug 'jiangmiao/auto-pairs'
 
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
@@ -237,7 +237,7 @@ omap af <Plug>(coc-funcobj-a)
 "nmap <silent> <C-d> <Plug>(coc-range-select)
 "xmap <silent> <C-d> <Plug>(coc-range-select)
 
-" Use `:Format` to format current buffer
+" Use `:Format` to format current buffe  r
 command! -nargs=0 Format :call CocAction('format')
 
 " Use `:Fold` to fold current buffer
@@ -318,7 +318,10 @@ au FileType go nmap <leader>gb <Plug>(go-doc-browser)
 au FileType go nmap <leader>gs <Plug>(go-doc-split)
 au FileType go nmap <leader>gv <Plug>(go-doc-vertical)
 au FileType go nmap <leader><leader>g :GoDecls<CR>
-
+au FileType go nmap <F9> :GoDebugBreakpoint<CR>
+au FileType go nmap <F5> :GoDebugContinue<CR>
+au FileType go nmap <F11> :GoDebugStep<CR>
+au FileType go nmap <F10> :GoDebugNext<CR>
 set autowrite
 
 
@@ -361,7 +364,7 @@ nmap <silent> <C-d> <Plug>(coc-cursors-word)*
 xmap <silent> <C-d> y/\V<C-r>=escape(@",'/\')<CR><CR>gN<Plug>(coc-cursors-range)gn
 
 " Auto-pairs settings
-let g:AutoPairsFlyMode=0
+"let g:AutoPairsFlyMode=0
 
 " ============================================================================ "
 " ===                             KEY MAPPINGS                             === "
