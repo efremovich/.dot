@@ -6,7 +6,8 @@
     "typescript",
     "typescriptreact",
     "javascriptreact",
-    "typescript.tsx"
+    "typescript.tsx",
+    "vue"
   ],
   "diagnostic.refreshAfterSave": true,
   "diagnostic.errorSign": "•",
@@ -15,14 +16,13 @@
   "suggest.maxPreviewWidth": 120,
   "suggest.noselect": false,
   "vetur.format.defaultFormatter.html": "prettier",
-  "vetur.format.defaultFormatter.js": "prettier-eslint",
   "vetur.format.defaultFormatterOptions": {
     "js-beautify-html": { "wrap_attributes": "force-expand-multiline" },
     "prettyhtml": {
       "printWidth": 100,
       "singleQuote": true,
-      "wrapAttributes": false,
-      "sortAttributes": false
+      "wrapAttributes": true,
+      "sortAttributes": true
     }
   },
   "coc.preferences.formatOnSaveFiletypes": [
